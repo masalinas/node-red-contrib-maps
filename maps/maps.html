@@ -1,0 +1,68 @@
+<!-- Maps-->
+<script type="text/x-red" data-template-name="maps">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa"></i>Name</label>
+    <input type="text" id="node-input-name">
+  </div>
+  <div class="form-row">
+    <label for="node-input-path"><i class="fa"></i>Path</label>
+    <input type="text" id="node-input-path" placeholder="Map path">
+  </div>
+  <div class="form-row">
+    <label for="node-input-charttitle"><i class="fa"></i>Title</label>
+    <input type="text" id="node-input-charttitle" placeholder="Map title">
+  </div>          
+</script>
+
+<script type="text/x-red" data-help-name="maps">
+  <p>Map.</p>
+  <p>Inputs</h3>
+  <dl class="message-properties">
+    <dt>Path<span class="property-type">string</span></dt>
+    <dd>This property sets the map path.</dd>
+  </dl>
+  <dl class="message-properties">
+    <dt>Title<span class="property-type">string</span></dt>
+    <dd>This property sets the map title.</dd>
+  </dl>  
+  <h3>Outputs</h3>
+  <dl class="message-properties">
+     <dt>payload<span class="property-type">object</span></dt>
+     <dd>The payload dataset object.</dd>
+  </dl>
+  <h3>Error</h3>
+  <dl class="message-properties">
+     <dt>error<span class="property-type">string</span></dt>
+     <dd>The error string.</dd>
+  </dl>
+  <h3>Details</h3>
+  <p><code>msg.payload</code> property contains the dataset. The data structure could be:</p>  
+  <p><code>{
+    "channel": "MAP01",
+    "dataset": [{"geo": {"lon": 0.0, "lat": 0.0}, 
+                 "description": "Temperature",
+                 "value": 19.2},
+                 {"geo": {"lon": 1.0, "lat": 1.0}, 
+                 "description": "Temperature",
+                 "value": 20.2}]
+  }</code>
+  </p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType("maps", {
+        category:'Maps',
+        defaults: {
+            name: {value: ''},
+            path: {value: 'maps'},
+            maptitle: {value: 'Map title'}            
+        },
+        outputs: 1,
+        inputs: 1,
+        label: function() {
+            return this.name || "Map";
+        },
+        color: '#DEBD5C',
+        icon: 'map.png'
+    });
+</script>
