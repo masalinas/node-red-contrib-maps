@@ -78,42 +78,33 @@ document.addEventListener("DOMContentLoaded", function(event) {
    $(".dropdown-menu").on("click", "a", function(event) {
         // export to image or pdf file
         if (event.target.id == 'image') {
-            /*var link = document.createElement('a');
-
-            link.download = 'image';
-            link.href = canvasImg;
-            link.click();*/  
-
             map.once('rendercomplete', function(event) {
-                var canvas = event.context.canvas;
+                var canvasImg = event.context.canvas;
 
-                if (navigator.msSaveBlob) {
-                  navigator.msSaveBlob(canvas.msToBlob(), 'map.png');
-                } else {
-                  canvas.toBlob(function(blob) {
-                    saveAs(blob, 'map.png');
-                  });
-                }
+                var link = document.createElement('a');
+
+                link.download = 'image';
+                link.href = canvasImg.toDataURL('image/png');
+                link.click();
             });
 
             map.renderSync();            
         }
         else {
-            var doc = new jsPDF('landscape');
+            map.once('rendercomplete', function(event) {
+                var canvasImg = event.context.canvas;
 
-            /*var specialElementHandlers = {
-                '#editor': function (element, renderer) {
-                    console.log(1);
-                    return true;
-                }
-            };
+                // A4 format
+                var size = map.getSize();
+                var extent = map.getView().calculateExtent(size);
 
-            doc.fromHTML($('#map').get(0), 15, 15, {
-                'width': 170, 
-                'elementHandlers': specialElementHandlers
+                var pdf = new jsPDF('landscape', undefined, 'a4');
+
+                pdf.addImage(canvasImg.toDataURL('image/jpeg'), 'JPEG', 0, 0, 297, 210 );
+                pdf.save('map.pdf');
             });
 
-            doc.save('test.pdf');*/
+            map.renderSync();
         }
     });
 
