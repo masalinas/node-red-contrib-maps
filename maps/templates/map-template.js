@@ -142,6 +142,26 @@ document.addEventListener("DOMContentLoaded", function(event) {
     // get map element
     var map = new ol.Map(config);
 
+    // change pointer over markers
+    map.on('pointermove', function(e) {
+        if (e.dragging) {
+          $(elementPopUp).popover('destroy');
+          
+          return;
+        };
+
+        var pixel = map.getEventPixel(e.originalEvent);
+        var hit = map.hasFeatureAtPixel(pixel);
+
+        var target = map.getTarget();
+        var jTarget = typeof target === "string" ? $("#" + target) : $(target);
+
+        if (hit)
+            jTarget.css("cursor", "pointer");
+        else 
+            jTarget.css("cursor", "");
+    });
+
     // display popup on click
     map.on('click', function(evt) {
         var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature) {
