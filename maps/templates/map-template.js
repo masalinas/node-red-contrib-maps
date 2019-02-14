@@ -33,15 +33,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     var position = ol.proj.fromLonLat([item.lon, item.lat]);
     
                     var feature = new ol.Feature({geometry: new ol.geom.Point(position)});
-
+                    
                     feature.setStyle(new ol.style.Style({
                         image: new ol.style.Icon({
                           color: item.color,
                           crossOrigin: 'anonymous',
-                          src: 'https://openlayers.org/en/v4.6.5/examples/data/dot.png'
+                          src: 'marker.png'
                         })
                     }));
-    
+                    
                     feature.set('description', item.description);
                     feature.set('value', item.value);
                     feature.set('unit', item.unit);

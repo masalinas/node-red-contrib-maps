@@ -26,6 +26,7 @@ module.exports = function(RED) {
 
     // add static folders
     app.use('/', serveStatic(path.join(__dirname, "css")));
+    app.use('/', serveStatic(path.join(__dirname, "images")));
     app.use('/', serveStatic(path.join(__dirname, "js")));
     app.use('/', serveStatic(path.join(__dirname, "templates")));
 
