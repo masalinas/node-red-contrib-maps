@@ -23,30 +23,46 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
         // update chart dataset
         if (red.msg !== undefined) {
-            var dataset = {
-                label: red.msg.payload.channel,                        
-                backgroundColor: red.msg.payload.color,
-                borderColor: red.msg.payload.color,
-                data: [],
-                fill: false
-            };
+            // initialize layer collection
+            vectorLayers = [];
+            
+            var vectorSource = new ol.source.Vector({});
 
-            red.msg.payload.dataset.forEach(item => {
-                var position = ol.proj.fromLonLat([item.lon, item.lat]);
-
-                var zoom = 16;
+            red.msg.payload.forEach(channel => {
+                channel.dataset.forEach(item => {                                        
+                    // get item position
+                    var position = ol.proj.fromLonLat([item.lon, item.lat]);
     
-                var marker = new ol.Overlay({
-                    position: position,
-                    positioning: 'center-center',
-                    element: document.getElementById('marker'),
-                    stopEvent: false
+                    // get item marker
+                    var feature = new ol.Feature({geometry: new ol.geom.Point(position)});
+                    feature.setStyle(new ol.style.Style({
+                        image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                          color: '#8959A8',
+                          crossOrigin: 'anonymous',
+                          src: 'https://openlayers.org/en/v4.6.5/examples/data/dot.png'
+                        }))
+                    }));
+    
+                    vectorSource.addFeature(feature);               
                 });
-    
-                map.addOverlay(marker);
             });
-                
-            //view.setCenter(position, zoom);
+                        
+            // create vector layer from all positions
+            var vectorLayer = new ol.layer.Vector({
+                source: vectorSource,
+                updateWhileAnimating: true,
+                updateWhileInteracting: true,
+                /* style: function(feature, resolution) {
+                    iconStyle.getImage().setScale(map.getView().getResolutionForZoom(18) / resolution);
+                    return iconStyle; 
+                } */
+            });
+
+            // add layer to map
+            map.addLayer(vectorLayer); 
+
+            // fit to extend points in the map
+            map.getView().fit(vectorLayer.getSource().getExtent(), map.getSize());
         }
 
         // update chart configuration
@@ -101,11 +117,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
     });
 
-    // set current view
-    var view = new ol.View({
-        center: ol.proj.fromLonLat([37.41, 8.82]),
-        zoom: 4
-    });
+    var vectorLayer = [];
 
     // set map configurations
     var config = {
@@ -115,7 +127,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
             source: new ol.source.OSM()
           })
         ],
-        view: view
+        view: new ol.View({
+            center: ol.proj.fromLonLat([37.41, 8.82]),
+            zoom: 4
+        })
     };
 
     // set map
