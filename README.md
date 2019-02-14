@@ -27,48 +27,58 @@ http://localhost:1880/MAP
 
 The **map payload attributes** are:
 * channel: The channel legend
-* color: The map makers
 * dataset: The map dataset
 
 The **payload dataset attributes** are:
 * lon: longitude point
 * lat: latitude point
-* value: value point
 * description: descripion value
+* value: value point
+* unit: value unit
+* color: color marker
 
 Read node help to check the dataset structure for each chart.
 A Europe Temperature Map dataset could be like this:
 ```
-{
-    "channel": "TEMP",
-    "color": "Red",
-    "dataset": [
-        {
-            "lon": -3.707698,
-            "lat": 23.8,
-            "value": 20.5,
-            "description": "Temperature [°C] in Madrid"
-        },
-        {
-            "lon": 2.34294,
-            "lat": 21.25,
-            "value": 20.5,
-            "description": "Temperature [°C] in London"
-        },
-        {
-            "lon": 2.34294,
-            "lat": 48.859271,
-            "value": 19.7,
-            "description": "Temperature [°C] in Paris"
-        },
-        {
-            "lon": 13.402786,
-            "lat": 52.517987,
-            "value": 10.8,
-            "description": "Temperature [°C] in Berlin"
-        }
-    ]
-}
+[
+    {
+        "channel": "TEMP",
+        "dataset": [
+            {
+                "lon": -3.703548,
+                "lat": 40.417204,
+                "description": "Temperature in Madrid",
+                "value": 20.5,
+                "unit": "°C",
+                "color": "Blue"
+            },
+            {
+                "lon": -0.075906,
+                "lat": 51.508319,
+                "description": "Temperature in London",
+                "value": 19,
+                "unit": "°C",
+                "color": "Yellow"
+            },
+            {
+                "lon": 2.34294,
+                "lat": 48.859271,
+                "description": "Temperature in Paris",
+                "value": 11.7,
+                "unit": "°C",
+                "color": "Red"
+            },
+            {
+                "lon": 13.402786,
+                "lat": 52.517987,
+                "description": "Temperature in Berlin",
+                "value": 10.8,
+                "unit": "°C",
+                "color": "Red"
+            }
+        ]
+    }
+]
 ```
 
 ## Dependencies
