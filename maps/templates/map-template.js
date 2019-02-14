@@ -179,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 element: elementPopUp,
                 positioning: 'bottom-center',
                 stopEvent: false,
-                offset: [0, -50]
+                offset: [0, -20]
                 });
 
             // remove all overlies add the new one

@@ -37,15 +37,38 @@
   </dl>
   <h3>Details</h3>
   <p><code>msg.payload</code> property contains the dataset. The data structure could be:</p>  
-  <p><code>{
-    "channel": "MAP01",
-    "dataset": [{"geo": {"lon": 0.0, "lat": 0.0}, 
-                 "description": "Temperature",
-                 "value": 19.2},
-                 {"geo": {"lon": 1.0, "lat": 1.0}, 
-                 "description": "Temperature",
-                 "value": 20.2}]
-  }</code>
+  <p><code>[
+    {
+        "channel": "TEMP",
+        "color": "Red",
+        "dataset": [
+            {
+                "lon": -3.703548,
+                "lat": 40.417204,
+                "value": 20.5,
+                "description": "Temperature [°C] in Madrid"
+            },
+            {
+                "lon": -0.075906,
+                "lat": 51.508319,
+                "value": 16,
+                "description": "Temperature [°C] in London"
+            },
+            {
+                "lon": 2.34294,
+                "lat": 48.859271,
+                "value": 19.7,
+                "description": "Temperature [°C] in Paris"
+            },
+            {
+                "lon": 13.402786,
+                "lat": 52.517987,
+                "value": 10.8,
+                "description": "Temperature [°C] in Berlin"
+            }
+        ]
+    }
+]</code>
   </p>
 </script>
 
