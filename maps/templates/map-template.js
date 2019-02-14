@@ -42,8 +42,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
                         })
                     }));
     
-                    feature.set('value', item.value);
                     feature.set('description', item.description);
+                    feature.set('value', item.value);
+                    feature.set('unit', item.unit);
 
                     // add marker to layer
                     vectorSource.addFeature(feature);
@@ -161,8 +162,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
         if (feature) {
             var coordinates = feature.getGeometry().getCoordinates();
 
-            var value = feature.get('value');
             var description = feature.get('description');
+            var value = feature.get('value');            
+            var unit = feature.get('unit');            
 
             // add item popup
             var popup = new ol.Overlay({
@@ -170,7 +172,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 positioning: 'bottom-center',
                 stopEvent: false,
                 offset: [0, -20]
-                });
+            });
 
             // remove all overlies add the new one
             map.getOverlays().getArray().slice(0).forEach(function(overlay) {
@@ -184,10 +186,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
             $(elementPopUp).popover('dispose');
 
+            var content;
+            if (description)
+                content = description;
+            if (value)
+                content = content + '<p>' + value;
+            if (unit)
+                content = content + unit;
+
             $(elementPopUp).popover({
                 placement: 'top',
                 html: true,
-                content: '<p>' + description + "<p>" + value
+                content: content
             });
             
             $(elementPopUp).popover('show')
