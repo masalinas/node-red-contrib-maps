@@ -1,8 +1,9 @@
 # node-red-contrib-chartjs
 Maps Node-RED node implemented by Openlayers 5
 
-![Node-RED Maps Dashboard](![node_maps](https://user-images.githubusercontent.com/1216181/52797842-0256df80-3077-11e9-8731-d54fb152eb2d.png)
-)
+
+![Node-RED Maps Dashboard](https://user-images.githubusercontent.com/1216181/52797842-0256df80-3077-11e9-8731-d54fb152eb2d.png)
+
 
 ## Description
 This node package permit to use [Openlayers](https://openlayers.org/) **map** from Node-RED. The objective is create a new url for the map created, this url path could be configured and updated at runtime.
