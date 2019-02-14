@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
       });
 
-   // export event
+   // export event implementation
    $(".dropdown-menu").on("click", "a", function(event) {
         // export to image or pdf file
         if (event.target.id == 'image') {
@@ -107,8 +107,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
             map.renderSync();
         }
     });
-
-    var vectorLayer = [];
 
     // set map configurations
     var config = {
