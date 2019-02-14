@@ -145,8 +145,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     // change pointer over markers
     map.on('pointermove', function(e) {
         if (e.dragging) {
-          $(elementPopUp).popover('destroy');
-          
+          $(elementPopUp).popover('dispose');
+
           return;
         };
 
@@ -182,20 +182,28 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 offset: [0, -50]
                 });
 
+            // remove all overlies add the new one
+            map.getOverlays().getArray().slice(0).forEach(function(overlay) {
+                map.removeOverlay(overlay);
+            });
+
             map.addOverlay(popup);
 
+            // set popup position and show
             popup.setPosition(coordinates);
+
+            $(elementPopUp).popover('dispose');
 
             $(elementPopUp).popover({
                 placement: 'top',
                 html: true,
-                content: 'description: ' + description + ", Value: " + value
+                content: '<p>' + description + "<p>" + value
             });
-
+            
             $(elementPopUp).popover('show')
         }
         else         
-            $(elementPopUp).popover('destroy');
+            $(elementPopUp).popover('dispose');
     });
 
     // get map popup element
