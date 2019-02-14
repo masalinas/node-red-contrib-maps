@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
                     feature.setStyle(new ol.style.Style({
                         image: new ol.style.Icon({
-                          color: channel.color,
+                          color: item.color,
                           crossOrigin: 'anonymous',
                           src: 'https://openlayers.org/en/v4.6.5/examples/data/dot.png'
                         })
@@ -46,17 +46,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     feature.set('description', item.description);
 
                     // add marker to layer
-                    vectorSource.addFeature(feature);  
-                    
-                    // add item popup
-                    /*var popup = new ol.Overlay({
-                        element: elementPopUp,
-                        positioning: 'bottom-center',
-                        stopEvent: false,
-                        offset: [0, -50]
-                      });
-
-                    map.addOverlay(popup);*/
+                    vectorSource.addFeature(feature);
                 });
             });
                         
