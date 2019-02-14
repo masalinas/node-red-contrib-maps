@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-maps",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Node-RED Maps node",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,7 +13,6 @@
   "author": "Miguel Salinas",
   "license": "Apache License, Version 2.0",
   "dependencies": {
-    "ol": "^5.3.0",
     "cors": "^2.8.5",
     "serve-static": "^1.13.2",
     "socket.io": "^2.2.0",
