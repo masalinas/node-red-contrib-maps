@@ -23,27 +23,40 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
         // update chart dataset
         if (red.msg !== undefined) {
-            // initialize layer collection
-            vectorLayers = [];
-            
+            // initialize layer collections            
             var vectorSource = new ol.source.Vector({});
 
+            // create layer from all channels and items dataset
             red.msg.payload.forEach(channel => {
                 channel.dataset.forEach(item => {                                        
-                    // get item position
+                    // create item marker
                     var position = ol.proj.fromLonLat([item.lon, item.lat]);
     
-                    // get item marker
                     var feature = new ol.Feature({geometry: new ol.geom.Point(position)});
+
                     feature.setStyle(new ol.style.Style({
-                        image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                          color: '#8959A8',
+                        image: new ol.style.Icon({
+                          color: channel.color,
                           crossOrigin: 'anonymous',
                           src: 'https://openlayers.org/en/v4.6.5/examples/data/dot.png'
-                        }))
+                        })
                     }));
     
-                    vectorSource.addFeature(feature);               
+                    feature.set('value', item.value);
+                    feature.set('description', item.description);
+
+                    // add marker to layer
+                    vectorSource.addFeature(feature);  
+                    
+                    // add item popup
+                    /*var popup = new ol.Overlay({
+                        element: elementPopUp,
+                        positioning: 'bottom-center',
+                        stopEvent: false,
+                        offset: [0, -50]
+                      });
+
+                    map.addOverlay(popup);*/
                 });
             });
                         
@@ -61,18 +74,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
             // add layer to map
             map.addLayer(vectorLayer); 
 
+            // create a Select interaction and add it to the map
+            /*var select = new ol.interaction.Select({
+                layers: [vectorLayer],
+                style: selectedStyle
+            });
+                                
+            map.addInteraction(select);*/
+
             // fit to extend points in the map
             map.getView().fit(vectorLayer.getSource().getExtent(), map.getSize());
         }
 
         // update chart configuration
         if (red.config !== undefined) {            
-            /*config.options.title.text = red.config.title;
-
-            // refresh chart
-            chart.update();*/
         }
-      });
+    });
 
    // export event implementation
    $(".dropdown-menu").on("click", "a", function(event) {
@@ -122,6 +139,45 @@ document.addEventListener("DOMContentLoaded", function(event) {
         })
     };
 
-    // set map
+    // get map element
     var map = new ol.Map(config);
+
+    // display popup on click
+    map.on('click', function(evt) {
+        var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+            return feature;
+        });
+
+        if (feature) {
+            var coordinates = feature.getGeometry().getCoordinates();
+
+            var value = feature.get('value');
+            var description = feature.get('description');
+
+            // add item popup
+            var popup = new ol.Overlay({
+                element: elementPopUp,
+                positioning: 'bottom-center',
+                stopEvent: false,
+                offset: [0, -50]
+                });
+
+            map.addOverlay(popup);
+
+            popup.setPosition(coordinates);
+
+            $(elementPopUp).popover({
+                placement: 'top',
+                html: true,
+                content: 'description: ' + description + ", Value: " + value
+            });
+
+            $(elementPopUp).popover('show')
+        }
+        else         
+            $(elementPopUp).popover('destroy');
+    });
+
+    // get map popup element
+    var elementPopUp = document.getElementById('popup');
 });
