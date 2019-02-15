@@ -1,5 +1,5 @@
-# node-red-contrib-chartjs
-Maps Node-RED node implemented by Openlayers 5
+# node-red-contrib-maps
+A Node-RED node implemented by Openlayers 5 to show Iot measures
 
 
 ![Node-RED Maps Dashboard](https://user-images.githubusercontent.com/1216181/52797842-0256df80-3077-11e9-8731-d54fb152eb2d.png)
