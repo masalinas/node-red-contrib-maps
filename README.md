@@ -98,7 +98,7 @@ A Europe Temperature Map dataset could be like this:
 * [bootstrap4](https://getbootstrap.com/): Build responsive, mobile-first projects on the web
 * [popper.js](https://popper.js.org/): A kickass library used to manage poppers in the web applications
 * [Openlayers](https://openlayers.org/): OpenLayers makes it easy to put a dynamic map in any web page
-developers
+* [moment](https://momentjs.com/): Parse, validate, manipulate, and display dates and times in JavaScript.
 * [jsPDF](https://parall.ax/products/jspdf): The leading HTML5 client solution for generating PDFs 
 
 ## Example

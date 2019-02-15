@@ -23,6 +23,7 @@ the socket.io server if not exist in the node-RED instance. The node save the so
 
  **Enhancements**
 
+* Add moment library on client side to manage dates
 * Add last updated date format label on the toolbar on the right. Set the export menu on the left. The rest tools added in the future will be on the left too.
 
 To make compatible the dataset of this node with the map node [node-red-contrib-web-worldmap](https://flows.nodered.org/node/node-red-contrib-web-worldmap) I made some changes:
