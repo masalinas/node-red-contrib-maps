@@ -17,7 +17,7 @@ the socket.io server if not exist in the node-RED instance. The node save the so
 
  **Enhancements**
 
- ### 0.2.1: Second Release with some Enhancements
+ ### 0.2.2: Second Release with some Enhancements
 
 **Fixes**
 
