@@ -47,34 +47,39 @@ A Europe Temperature Map dataset could be like this:
             {
                 "lon": -3.703548,
                 "lat": 40.417204,
+                "name": "9fj04r",
                 "description": "Temperature in Madrid",
                 "value": 20.5,
                 "unit": "°C",
-                "color": "Blue"
+                "iconColor": "Blue"
             },
             {
                 "lon": -0.075906,
                 "lat": 51.508319,
+                "name": "04jgpe",
                 "description": "Temperature in London",
                 "value": 19,
                 "unit": "°C",
-                "color": "Yellow"
+                "iconColor": "Yellow"
             },
             {
                 "lon": 2.34294,
                 "lat": 48.859271,
+                "name": "lfj82k",
                 "description": "Temperature in Paris",
+                "label": "Alert for strong frosts",
                 "value": 11.7,
                 "unit": "°C",
-                "color": "Red"
+                "iconColor": "Red"
             },
             {
                 "lon": 13.402786,
                 "lat": 52.517987,
+                "name": "0lw233",
                 "description": "Temperature in Berlin",
                 "value": 10.8,
                 "unit": "°C",
-                "color": "Red"
+                "iconColor": "Red"
             }
         ]
     }

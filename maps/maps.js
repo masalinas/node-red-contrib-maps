@@ -108,7 +108,7 @@ module.exports = function(RED) {
             var topic = socket.handshake.query.topic;
 
             if (conf.path == topic) {
-                console.log('a socket connection with id: ' + socket.conn.id + ' from host: ' + socket.conn.remoteAddress + ' and topic:' + topic + ' is created at ' + new Date());
+                console.log('a socket connection with id: ' + socket.conn.id + ' from host: ' + socket.conn.remoteAddress + ' and topic: ' + topic + ' is created at ' + new Date());
 
                 // publish chart configurations        
                 var config = {title: conf.charttitle, xaxis: conf.xaxis, yaxis : conf.yaxis};
@@ -117,8 +117,8 @@ module.exports = function(RED) {
                 var item = getPath(node.id);
                 io.emit(item.path, red);
 
-                socket.on('disconnect', function(){
-                    console.log('user disconnected');
+                socket.on('disconnect', function() {
+                    console.log('a socket disconnection is created at ' + new Date());
                 });
             }
         });

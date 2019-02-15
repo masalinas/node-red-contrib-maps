@@ -37,13 +37,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     
                     feature.setStyle(new ol.style.Style({
                         image: new ol.style.Icon({
-                          color: item.color,
+                          color: item.iconColor,
                           crossOrigin: 'anonymous',
                           src: 'marker.png'
                         })
                     }));
                     
+                    feature.set('name', item.name);
                     feature.set('description', item.description);
+                    feature.set('label', item.label);
                     feature.set('value', item.value);
                     feature.set('unit', item.unit);
 
@@ -52,6 +54,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 });
             });
                         
+            $(elementPopUp).popover('dispose');
+
             // create vector layer from all positions
             var vectorLayer = new ol.layer.Vector({
                 source: vectorSource,
@@ -76,6 +80,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
             // fit to extend points in the map
             map.getView().fit(vectorLayer.getSource().getExtent(), map.getSize());
+
+            // set last updated
+            document.getElementById("lastUpdated").innerHTML = 'Last update at ' + moment(new Date()).format('MMMM Do YYYY, h:mm:ss a');
         }
 
         // update chart configuration
@@ -135,27 +142,70 @@ document.addEventListener("DOMContentLoaded", function(event) {
     var map = new ol.Map(config);
 
     // change pointer over markers
-    map.on('pointermove', function(e) {
-        if (e.dragging) {
+    map.on('pointermove', function(evt) {
+        if (evt.dragging) {
           $(elementPopUp).popover('dispose');
 
           return;
         };
 
-        var pixel = map.getEventPixel(e.originalEvent);
+        var pixel = map.getEventPixel(evt.originalEvent);
         var hit = map.hasFeatureAtPixel(pixel);
 
         var target = map.getTarget();
         var jTarget = typeof target === "string" ? $("#" + target) : $(target);
 
-        if (hit)
+        if (hit) {
             jTarget.css("cursor", "pointer");
-        else 
+
+            // get feature from the marker
+            var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+                return feature;
+            });
+    
+            // show a tooltip if exist any label
+            if (feature) {
+                var label = feature.get('label');  
+
+                if (label) {
+                    var coordinates = feature.getGeometry().getCoordinates();
+
+                    // remove all overlies add the new one
+                    map.getOverlays().getArray().slice(0).forEach(function(overlay) {
+                        map.removeOverlay(overlay);
+                    });
+
+                    map.addOverlay(tooltip);
+
+                    // set popup position and show
+                    tooltip.setPosition(coordinates);
+
+                    $(elementTooltip).popover('dispose');
+
+                    $(elementTooltip).popover({
+                        placement: 'top',
+                        html: true,
+                        content: label
+                    });
+                    
+                    $(elementTooltip).popover('show');
+                }
+            }
+            else             
+                $(elementTooltip).popover('dispose');
+        }
+        else {
             jTarget.css("cursor", "");
+
+            $(elementTooltip).popover('dispose');
+        }
     });
 
     // display popup on click
     map.on('click', function(evt) {
+        // remove any tooltip if exist
+        $(elementTooltip).popover('dispose');
+
         var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature) {
             return feature;
         });
@@ -163,6 +213,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         if (feature) {
             var coordinates = feature.getGeometry().getCoordinates();
 
+            var name = feature.get('name');
             var description = feature.get('description');
             var value = feature.get('value');            
             var unit = feature.get('unit');            
@@ -188,10 +239,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
             $(elementPopUp).popover('dispose');
 
             var content;
+            if (name)
+                content = '<b>Name: </b>' + name;
             if (description)
-                content = description;
+                content = content + '<br><b>Description: </b>' + description;
             if (value)
-                content = content + '<p>' + value;
+                content = content + '<br><b>Value: </b>' + value + ' ';
             if (unit)
                 content = content + unit;
 
@@ -201,7 +254,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 content: content
             });
             
-            $(elementPopUp).popover('show')
+            $(elementPopUp).popover('show');
         }
         else         
             $(elementPopUp).popover('dispose');
@@ -209,4 +262,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     // get map popup element
     var elementPopUp = document.getElementById('popup');
+
+    // get map tooltip element
+    var elementTooltip = document.getElementById('tooltip');
+
+    var tooltip = new ol.Overlay({
+        element: elementTooltip,
+        offset: [0, -20],
+        positioning: 'bottom-center',
+        stopEvent: false,
+    });
+
+    // initialize last update label
+    document.getElementById("lastUpdated").innerHTML = 'Last update at ' + moment(new Date()).format('MMMM Do YYYY, h:mm:ss a');
 });

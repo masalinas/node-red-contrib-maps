@@ -16,3 +16,18 @@ the socket.io server if not exist in the node-RED instance. The node save the so
 * The node will be able to work with other nodes that use socket.io server too, Of course the global context **io** variable will be reserver by me.
 
  **Enhancements**
+
+ ### 0.2.1: Second Release with some Enhancements
+
+**Fixes**
+
+ **Enhancements**
+
+* Add last updated date format label on the toolbar on the right. Set the export menu on the left. The rest tools added in the future will be on the left too.
+
+To make compatible the dataset of this node with the map node [node-red-contrib-web-worldmap](https://flows.nodered.org/node/node-red-contrib-web-worldmap) I made some changes:
+* Add new atribute called **name**: this attribute is showed in tooltip on click event marker near the **description, value and unit** attributes.
+* Change color attribute name to iconColor to be compatible.
+* Add new **label** attribute used like a tooltip on over event marker if exist.
+
+The example is save again with these new updates to be tested
