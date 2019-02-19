@@ -30,12 +30,14 @@ The **map payload attributes** are:
 * dataset: The map dataset
 
 The **payload dataset attributes** are:
-* lon: longitude point
-* lat: latitude point
-* description: descripion value
-* value: value point
-* unit: value unit
-* color: color marker
+* lon: longitude marker
+* lat: latitude marker
+* name: name marker
+* description: descripion marker
+* value: value marker
+* unit: value marker
+* label: label tooltip marker (alarm message)
+* color: color marker (alarm status)
 
 Read node help to check the dataset structure for each chart.
 A Europe Temperature Map dataset could be like this:
